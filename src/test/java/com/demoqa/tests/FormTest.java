@@ -1,28 +1,17 @@
 package com.demoqa.tests;
 
-import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.RegistrationFormPage;
 import com.github.javafaker.Faker;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 
 @Tag("demoqa")
-public class FormTest {
+public class FormTest extends TestBase{ // расширь класс и включи TestBase!!!!!!!!!
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     Faker faker = new Faker();
 
-    @BeforeAll
-    static void setUp() {
-        Configuration.holdBrowserOpen = true;
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
-    }
-
-    // parameters
     String firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             InputEmail = faker.internet().emailAddress(),
@@ -60,7 +49,7 @@ public class FormTest {
                     .setCity(city)
                     .submitForm();
         });
-        //asserts
+
         step("Asserts", () -> {
             registrationFormPage
                     .checkTitle(endForm)

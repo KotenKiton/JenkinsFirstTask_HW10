@@ -20,7 +20,7 @@ public class TestBase {
     
         Configuration.baseUrl = "https://demoqa.com"; // Задать базовый УРЛ.
         Configuration.browserSize = "1920x1080"; // задать желаемый размер экрана.
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub"; // путь запуска
+        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub"; // путь запуска селеноида
 
         // копипаста для подключения видео отчётов.
         DesiredCapabilities capabilities = new DesiredCapabilities(); // capabilities - ключи и значения
