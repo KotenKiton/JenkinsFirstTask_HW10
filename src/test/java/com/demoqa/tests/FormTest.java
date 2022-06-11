@@ -1,11 +1,16 @@
 package com.demoqa.tests;
+
 import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.RegistrationFormPage;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 
+@Tag("demoqa")
 public class FormTest {
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     Faker faker = new Faker();
@@ -38,34 +43,37 @@ public class FormTest {
 
     @Test
     void fillFormTest() {
-        registrationFormPage
-                .openPage()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setUserEmail(InputEmail)
-                .setGenderUser(gender)
-                .setUserNumber(mobilePhone)
-                .setBirthDate(day, month, year)
-                .setSubjects(subject)
-                .setHobby(hobbies)
-                .setPhoto(photo)
-                .setCurrentAddress(address)
-                .setState(state)
-                .setCity(city)
-                .submitForm()
-
-                //asserts
-                .checkTitle(endForm)
-                .checkResult("Student Name", fullName)
-                .checkResult("Student Email", InputEmail)
-                .checkResult("Gender", gender)
-                .checkResult("Mobile", mobilePhone)
-                .checkResult("Date of Birth", dayOfBirthday)
-                .checkResult("Subjects", subject)
-                .checkResult("Hobbies", hobbies)
-                .checkResult("Picture", photo)
-                .checkResult("Address", address)
-                .checkResult("State and City", state + " " + city);
-
+        step("Open registration form page", () -> {
+            registrationFormPage
+                    .openPage()
+                    .setFirstName(firstName)
+                    .setLastName(lastName)
+                    .setUserEmail(InputEmail)
+                    .setGenderUser(gender)
+                    .setUserNumber(mobilePhone)
+                    .setBirthDate(day, month, year)
+                    .setSubjects(subject)
+                    .setHobby(hobbies)
+                    .setPhoto(photo)
+                    .setCurrentAddress(address)
+                    .setState(state)
+                    .setCity(city)
+                    .submitForm();
+        });
+        //asserts
+        step("Asserts", () -> {
+            registrationFormPage
+                    .checkTitle(endForm)
+                    .checkResult("Student Name", fullName)
+                    .checkResult("Student Email", InputEmail)
+                    .checkResult("Gender", gender)
+                    .checkResult("Mobile", mobilePhone)
+                    .checkResult("Date of Birth", dayOfBirthday)
+                    .checkResult("Subjects", subject)
+                    .checkResult("Hobbies", hobbies)
+                    .checkResult("Picture", photo)
+                    .checkResult("Address", address)
+                    .checkResult("State and City", state + " " + city);
+        });
     }
 }
