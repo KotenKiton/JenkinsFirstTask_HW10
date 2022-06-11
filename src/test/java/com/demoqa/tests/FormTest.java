@@ -2,12 +2,14 @@ package com.demoqa.tests;
 
 import com.demoqa.pages.RegistrationFormPage;
 import com.github.javafaker.Faker;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static io.qameta.allure.Allure.step;
 import static java.lang.String.format;
 
 @Tag("demoqa")
+@DisplayName("Тест формы регистрации")
 public class FormTest extends TestBase{ // расширь класс и включи TestBase!!!!!!!!!
     RegistrationFormPage registrationFormPage = new RegistrationFormPage();
     Faker faker = new Faker();
@@ -31,11 +33,17 @@ public class FormTest extends TestBase{ // расширь класс и вклю
             endForm = "Thanks for submitting the form";
 
     @Test
+    @DisplayName("Тест формы регистрации")
     void fillFormTest() {
-        step("Open registration form page", () -> {
+        step("Открываем страницу формы регистрации", () -> {
             registrationFormPage
-                    .openPage()
-                    .setFirstName(firstName)
+                    .openPage();
+
+            step("Заполняем поле имени", () -> {
+            registrationFormPage
+                    .setFirstName(firstName);
+            });
+            registrationFormPage
                     .setLastName(lastName)
                     .setUserEmail(InputEmail)
                     .setGenderUser(gender)
@@ -50,7 +58,7 @@ public class FormTest extends TestBase{ // расширь класс и вклю
                     .submitForm();
         });
 
-        step("Asserts", () -> {
+        step("Проверки", () -> {
             registrationFormPage
                     .checkTitle(endForm)
                     .checkResult("Student Name", fullName)
